@@ -9,5 +9,6 @@
 
 	<modules>
 		<module>tts</module>
+		<module>scanner</module>
 	</modules>
 </project>
