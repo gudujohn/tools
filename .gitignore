@@ -2,8 +2,6 @@
 .classpath
 .project
 # Generated files
-/bin/
-/gen/
-/out/
-/target/
-/.settings/
+bin
+target
+.settings
