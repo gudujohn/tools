@@ -1,11 +1,11 @@
 package ss_engine.Impl;
 
 import java.applet.AudioClip;
-import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sun.media.sound.JavaSoundAudioClip;
+import javax.swing.JApplet;
 
 import ss_engine.ICharactorTool;
 import ss_engine.ISpeakSound;
@@ -15,7 +15,6 @@ import ss_engine.ISpeakSound;
  * 
  * @author JiangGengChao
  */
-@SuppressWarnings("restriction")
 public class SpeakSoundImpl implements ISpeakSound {
 
 	// 需要播放的声音文件列表
@@ -52,10 +51,8 @@ public class SpeakSoundImpl implements ISpeakSound {
 		if (MyGetPinYin.getPath() == null) {
 			for (String s : fileNames) {
 				try {
-					InputStream inputStream = SpeakSoundImpl.class.getClassLoader().getResourceAsStream("TTSSounds/" + s);
-					if (inputStream != null) {
-						pool.add(new JavaSoundAudioClip(inputStream));
-					}
+					URL url = this.getClass().getResource("/TTSSounds/" + s);
+					pool.add(JApplet.newAudioClip(url));
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
