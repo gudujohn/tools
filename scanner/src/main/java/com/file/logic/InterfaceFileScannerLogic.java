@@ -1,4 +1,4 @@
-package com.logic;
+package com.file.logic;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -10,10 +10,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.common.filter.JavaFilter;
-import com.common.filter.ServiceFilter;
-import com.common.filter.ServiceImplFilter;
-import com.common.util.FileUtil;
+import com.file.common.filter.JavaFilter;
+import com.file.common.filter.ServiceFilter;
+import com.file.common.filter.ServiceImplFilter;
+import com.file.common.util.FileUtil;
 
 public class InterfaceFileScannerLogic {
 	public static void getAllUnUsedInterFaceFile(String path) {

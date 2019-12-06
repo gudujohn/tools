@@ -1,4 +1,4 @@
-package com.logic;
+package com.file.logic;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.common.filter.JavaFilter;
-import com.common.util.FileUtil;
+import com.file.common.filter.JavaFilter;
+import com.file.common.util.FileUtil;
 
 /**
  * 标注服务名称规范话比对逻辑

@@ -1,4 +1,4 @@
-package com.common.util;
+package com.file.common.util;
 
 import java.text.NumberFormat;
 import java.util.LinkedList;

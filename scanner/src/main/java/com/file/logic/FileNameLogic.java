@@ -1,10 +1,10 @@
-package com.logic;
+package com.file.logic;
 
 import java.io.File;
 import java.util.List;
 
-import com.common.filter.PngFilter;
-import com.common.util.FileUtil;
+import com.file.common.filter.PngFilter;
+import com.file.common.util.FileUtil;
 
 public class FileNameLogic {
 	public static void upperCaseAllPngFileName(String path) {

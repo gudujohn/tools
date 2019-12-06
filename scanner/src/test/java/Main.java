@@ -1,12 +1,12 @@
 import java.io.File;
 import java.util.List;
 
-import com.common.filter.PngFilter;
-import com.common.util.FileUtil;
-import com.common.util.StopWatch;
-import com.logic.AnnotationServiceNameStandardLogic;
-import com.logic.FileNameLogic;
-import com.logic.InterfaceFileScannerLogic;
+import com.file.common.filter.PngFilter;
+import com.file.common.util.FileUtil;
+import com.file.common.util.StopWatch;
+import com.file.logic.AnnotationServiceNameStandardLogic;
+import com.file.logic.FileNameLogic;
+import com.file.logic.InterfaceFileScannerLogic;
 
 /**
  * 主函数入口
