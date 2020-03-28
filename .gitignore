@@ -1,7 +1,10 @@
-#eclipse files
-.classpath
-.project
-# Generated files
+#package
 bin
 target
 .settings
+node_modules
+
+#files
+.classpath
+.project
+package-lock.json

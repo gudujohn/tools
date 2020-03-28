@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<title></title>
+	<meta name="viewport"
+		content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<link rel="stylesheet" href="/css/bootstrap.css">
+	<script src="/js/polyfill.min.js"></script>
+	<script src="/js/vue.min.js"></script>
+	<script src="/js/socket.io/socket.io.js"></script>
+	<style>
+		html,
+		body,
+		#app {
+			height: 100%;
+			background: gray
+		}
+
+		*,
+		ul {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+			word-break: break-all;
+			-webkit-user-select: none;
+		}
+
+		.app {
+			height: 100%;
+			position: relative;
+			overflow: hidden;
+		}
+
+		header {
+			text-align: center;
+			background: #333333;
+			height: 50px;
+			line-height: 50px;
+			color: #fff;
+		}
+
+		#messageContainer,
+		#messageContainer1 {
+			background: gray;
+			overflow: auto;
+			position: absolute;
+			top: 60px;
+			bottom: 60px;
+			width: 100%;
+		}
+
+		#messageContainer li,
+		#messageContainer1 li {
+			display: flex;
+			padding: 5px;
+			position: relative;
+		}
+
+		.inputContainer {
+			position: fixed;
+			bottom: 0;
+			width: 100%;
+			padding: 5px;
+			display: -webkit-box;
+			display: -webkit-flex;
+			display: flex;
+			z-index: 100;
+			background: #333333;
+		}
+
+		.inputContainer input {
+			flex: 1;
+			padding: 2px 5px;
+			outline: none;
+			border: none
+		}
+
+		.inputContainer button {
+			background: #333333;
+			color: #fff;
+			padding: 10px;
+			outline: none;
+			border: none;
+		}
+
+		.userphoto img {
+			width: 50px;
+			border-radius: 50%;
+		}
+
+		.userphoto {
+			margin-right: 10px;
+			height: auto;
+			min-width: 60px;
+			max-width: 60px;
+			text-align: center;
+		}
+
+		.wordsContainer {
+			margin-top: 15px;
+			border-radius: 5px;
+			background: #ffffff;
+			padding: 5px 10px;
+			min-height: 20px;
+			position: relative;
+		}
+
+		.trangle {
+			left: -70px;
+			top: 24px;
+			width: 0;
+			height: 0;
+			position: absolute;
+			border-width: 5px 5px 5px 0;
+			border-style: solid;
+			border-color: transparent #FFFFFF transparent transparent;
+			/*透明 灰 透明 透明 */
+		}
+
+		.selfitem {
+			flex-direction: row-reverse;
+		}
+
+		.selfitem .wordsContainer {
+			margin-right: 10px;
+			left: auto;
+			right: 70px;
+		}
+
+		.selfitem .wordsContainer .trangle {
+			right: 80px;
+			left: auto;
+			border-width: 5px 0 5px 5px;
+			border-style: solid;
+			border-color: transparent transparent transparent #FFFFFF;
+			/*透明 透明 透明 灰*/
+		}
+
+		[v-cloak] {
+			display: none;
+		}
+
+		.userJoinTip {
+			color: #fff;
+			text-align: center;
+			max-width: 200px;
+			text-overflow: ellipsis;
+			overflow: hidden;
+			white-space: nowrap;
+			position: absolute;
+			z-index: 10;
+			top: 60px;
+			left: 50%;
+			transform: translateX(-50%);
+			background: rgba(0, 0, 0, 0.3);
+			padding: 5px 10px;
+			border-radius: 3px;
+		}
+
+		.userNumber {
+			position: absolute;
+			right: 5px;
+			top: 0px;
+		}
+
+		.username {
+			text-align: left;
+			left: 5px;
+			width: 120px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			text-align: center;
+		}
+
+		.logoimg {
+			vertical-align: middle;
+			animation: logo-spin infinite 20s linear;
+			position: relative;
+			z-index: 0
+		}
+
+		.imgcontent {
+			background: #ffffff;
+		}
+
+		@keyframes logo-spin {
+			from {
+				transform: rotate(0deg);
+			}
+
+			to {
+				transform: rotate(360deg);
+			}
+		}
+	</style>
+	<script src="/js/jquery-1.10.2.js"></script>
+	<script src="/js/jquery.qqface.min.js"></script>
+</head>
+
+<body>
+	<div id="app">
+		<div v-if="!userForm" class="app">
+			<header v-if="!userForm">
+				<div class="userNumber username">{{user.sex === 'male'?'帅气的':'可爱的'}}{{user.name}}</div>
+				私人聊天室
+				<div class="userNumber">当前有{{userNumber}}人</div>
+			</header>
+			<div class="userJoinTip" v-if="userJoin">
+				{{newUserJoin}}
+			</div>
+			<ul id="messageContainer1" ref="massageContainer">
+				<li v-for="item,key in msgList" :class="[item.isself?'selfitem':'']" :key="key">
+					<div class="userphoto">
+						<img :src="item.userPhoto" />
+						<div class="username" style="width:60px;" v-text="item.name"></div>
+					</div>
+					<div>
+						<div class="wordsContainer">
+							<div class="trangle"></div>
+							<span v-html="item.msg"></span>
+						</div>
+					</div>
+				</li>
+			</ul>
+			<div class="inputContainer">
+				<input ref="msg" id="msg" name="msg" autocomplete="off" @keyup.enter="sendMsg" @focus="typing"
+					@blur="stopTyping" v-model="msg" type="text" />
+				<div class="imgcontent">
+					<img src="/img/face.jpg" width="30px" style="margin-top:7px" alt="">
+				</div>
+				<button @click="sendMsg">发送</button>
+			</div>
+		</div>
+		<section v-else class="container d-flex align-items-center justify-content-center justify-content-center"
+			style="height:100%;background:#333333;">
+			<div class="align-self-center" style="text-align: center;">
+				<img src="/img/face.jpg" class="logoimg" alt="">
+				<form class="col align-self-center" action="" onsubmit="return false">
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text" id="basic-addon1">登陆名</span>
+						</div>
+						<input type="text" class="form-control" v-model="user.name"
+							placeholder="Please input your username" aria-label="Username"
+							aria-describedby="basic-addon1">
+					</div>
+					<div class="text-center">
+						<div class="custom-control custom-radio custom-control-inline">
+							<input type="radio" id="customRadioInline1" v-model="user.sex" name="customRadioInline1"
+								value="male" class="custom-control-input">
+							<label class="custom-control-label" for="customRadioInline1" style="color:#fff;">男</label>
+						</div>
+						<div class="custom-control custom-radio custom-control-inline">
+							<input type="radio" v-model="user.sex" id="customRadioInline2" name="customRadioInline1"
+								value="female" class="custom-control-input">
+							<label class="custom-control-label" for="customRadioInline2" style="color:#ffffff">女</label>
+						</div>
+					</div>
+					<div class="text-center" style="margin-top: 10px;">
+						<button type="submit" class="btn btn-primary" @click="login">登陆</button>
+					</div>
+				</form>
+			</div>
+		</section>
+	</div>
+	<script type="application/javascript">
+		var app = new Vue({
+			el: "#app",
+			data: {
+				userForm: true,//登陆框
+				hasChangeToForm: false,
+				userJoin: false, //其他用户登陆 提示框
+				timeCount: null, //提示框消失定时器
+				user: {  //登陆者的信息
+					name: "",
+					sex: "male"
+				},
+				userNumber: 0,//讨论组
+				newUserJoin: "", //新用户提示框文字
+				msg: "", //发送的消息
+				msgList: [],//对话列表
+				socket: "", //当前的socket连接
+				isTyping: false  //是否正在输入
+			},
+			updated() {
+				if(!this.userForm && !this.hasChangeToForm) {
+					this.hasChangeToForm = true;
+					$.qqface({
+						imgPath: '/img/',   //表情图片存放的路径
+						textarea: $('#msg'),
+						handle: $('.imgcontent')
+					});
+				}
+			},
+			methods: {
+				login: function () {  //登陆建立socket连接
+					if (this.user.name.trim().length === 0) { alert("请输入登录名"); return; }
+					if (this.user.name.trim().length >= 7) { alert("名字最长6位"); return; }
+					this.user.id = Math.random() + Math.random();  //用户标识 判断是自己还是别人
+					this.user.userPhoto = this.user.sex === "male" ? this.male() : this.male();
+					this.socket = io.connect('ws://' + window.location.host);
+					this.socket.emit("login", this.user);
+					this.socket.on('chat', function (data) {
+						app.msg = "";
+						if(data.id == -1) {
+							app.userJoin = true;
+							clearTimeout(app.timeCount)
+							app.newUserJoin = data.msg;
+							app.timeCount = setTimeout(function () {
+								app.userJoin = false;
+								app.newUserJoin = null;
+							}, 2000)
+							return;
+						} else if (data.id === app.user.id) {  //用户标识 判断是自己还是别人
+							data.isself = true;
+						};
+						app.msgList.push(data);
+						app.$nextTick(function () {  //跟随文字移动
+							var scrollHeight = app.$refs.massageContainer.scrollHeight;
+							app.$refs.massageContainer.scrollTop = scrollHeight;
+						});
+					});
+					this.socket.on("login", function (data) {
+						app.userNumber = data.userNumber;
+						app.userForm = false;
+					});
+					this.socket.on("userJoin", function (data) {
+						app.userJoin = true;
+						clearTimeout(app.timeCount)
+						app.newUserJoin = app.tip(data.name, "join");
+						app.userNumber = data.userNumber;
+						app.timeCount = setTimeout(function () {
+							app.userJoin = false;
+						}, 2000)
+					});
+					this.socket.on("userLeave", function (data) {
+						app.userJoin = true;
+						clearTimeout(app.timeCount)
+						app.newUserJoin = app.tip(data.name, "leave");
+						app.userNumber = data.userNumber;
+						app.timeCount = setTimeout(function () {
+							app.userJoin = false;
+						}, 2000);
+					});
+					this.socket.on("typing", function (data) {
+						app.userJoin = true;
+						app.newUserJoin = data.name + "正在输入";
+					});
+					this.socket.on("stopTyping", function (data) {
+						app.userJoin = false;
+						app.newUserJoin = null;
+					});
+				},
+				typing: function () {
+					this.socket.emit("typing");
+				},
+				stopTyping: function () {
+					this.socket.emit("stopTyping");
+				},
+				sendMsg: function () {
+					this.$forceUpdate()
+					this.msg = this.$refs.msg.value;
+					var msg = this.msg.trim();
+					this.user.msg = this.replace_em(msg);
+					if (msg.length === 0) { return; }
+					this.socket.emit("chat", this.user);
+					app.msg = "";
+				},
+				tip: function (username, state) {
+					if (state == "join") {
+						return username + "进入了讨论组";
+					} else if (state == "leave") {
+						return username + "离开了讨论组"
+					}
+				},
+				male: function () {
+					return '/img/face.jpg';
+				},
+				replace_em: function (str) {
+					var imgArray = str.match(/\[em_\d+\]/g);
+					if (!imgArray) {
+						return str;
+					};
+					for (var i = 0; i < imgArray.length; i++) {
+						var number = imgArray[i].match(/\d+/);
+						str = str.replace(/\[em_\d+\]/, `<img src='arclist/${number}.gif' border="0" />`);
+					}
+					return str;
+				}
+			}
+		})
+	</script>
+</body>
+
+</html>
