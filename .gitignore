@@ -6,6 +6,7 @@ dist
 node_modules
 META-INF
 out
+logs
 
 # Log file
 *.log
@@ -24,4 +25,3 @@ package-lock.json
 *.zip
 *.tar.gz
 *.rar
-*.7z
