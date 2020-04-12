@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<menu-config>
+    <menu id="toolMenu" name="工具">
+        <!--<menuItem id="singThreadTest" name="单线程压力测试"></menuItem>
+        <menuItem id="multiThreadTest" name="多线程压力测试"></menuItem>-->
+        <separator/>
+        <menu id="scene" name="场景">
+            <menuItem id="baidu" name="百度">
+                <url><![CDATA[http://www.baidu.com]]></url>
+                <method><![CDATA[POST]]></method>
+                <header id="servicecode"><![CDATA[IRMSYSTEM_IUserSessionSV_login]]></header>
+                <header id="servicecode"><![CDATA[IRMSYSTEM_IUserSessionSV_login]]></header>
+                <header id="version"><![CDATA[1.0]]></header>
+            </menuItem>
+            <menuItem id="John" name="John">
+                <url><![CDATA[http://jiangservices.xyz]]></url>
+                <method><![CDATA[GET]]></method>
+            </menuItem>
+        </menu>
+    </menu>
+</menu-config>
