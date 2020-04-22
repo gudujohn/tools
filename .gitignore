@@ -5,8 +5,11 @@ target
 dist
 node_modules
 META-INF
+docout
 out
-logs
+
+#custom package
+docout
 
 # Log file
 *.log
@@ -25,3 +28,4 @@ package-lock.json
 *.zip
 *.tar.gz
 *.rar
+*.7z
