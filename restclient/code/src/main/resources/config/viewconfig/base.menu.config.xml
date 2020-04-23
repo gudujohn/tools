@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<menu-config>
+    <menu id="toolMenu" name="工具">
+        <menuItem id="singThreadTest" name="单线程压力测试"></menuItem>
+        <menuItem id="multiThreadTest" name="多线程压力测试"></menuItem>
+        <separator/>
+    </menu>
+</menu-config>

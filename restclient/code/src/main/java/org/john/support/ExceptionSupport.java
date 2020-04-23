@@ -2,10 +2,10 @@ package org.john.support;
 
 import java.awt.*;
 
-import com.enhance.common.util.Detect;
-import com.enhance.common.util.ExceptionUtil;
-import com.enhance.swing.dialog.ExceptionDialog;
-import com.enhance.swing.message.MessageUtil;
+import org.enhance.common.util.Detect;
+import org.enhance.common.util.ExceptionUtil;
+import org.enhance.swing.dialog.ExceptionDialog;
+import org.enhance.swing.message.MessageUtil;
 
 public class ExceptionSupport {
 	private ExceptionSupport() {

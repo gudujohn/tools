@@ -9,9 +9,9 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 
-import com.enhance.common.support.ThreadCallBack;
-import com.enhance.common.util.Assertion;
-import com.enhance.common.util.Detect;
+import org.enhance.common.support.ThreadCallBack;
+import org.enhance.common.util.Assertion;
+import org.enhance.common.util.Detect;
 import org.john.enums.MethodEnum;
 import org.john.service.RestManagementService;
 import org.john.service.RestService;

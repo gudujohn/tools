@@ -7,7 +7,7 @@ import java.util.Properties;
 import org.apache.commons.lang3.ArrayUtils;
 
 import org.john.constant.SysConfigConst;
-import com.enhance.common.util.Detect;
+import org.enhance.common.util.Detect;
 
 import lombok.extern.slf4j.Slf4j;
 

@@ -1,7 +1,7 @@
 package org.john.support.config;
 
 import org.john.constant.SysConfigConst;
-import com.enhance.common.util.Detect;
+import org.enhance.common.util.Detect;
 
 public class ThreadConfig {
 	private static int testThreadCount;

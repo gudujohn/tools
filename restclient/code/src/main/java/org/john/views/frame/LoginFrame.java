@@ -9,8 +9,8 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 
 import org.john.constant.PictureConst;
-import com.enhance.swing.progress.ProgressBarCallback;
-import com.enhance.swing.progress.ProgressBarThread;
+import org.enhance.swing.progress.ProgressBarCallback;
+import org.enhance.swing.progress.ProgressBarThread;
 import org.john.support.config.SystemConfig;
 import org.john.util.SpringUtil;
 import org.john.views.ComponentPool;

@@ -9,7 +9,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import com.enhance.common.util.StopWatch;
+import org.enhance.common.util.StopWatch;
 
 import lombok.extern.slf4j.Slf4j;
 

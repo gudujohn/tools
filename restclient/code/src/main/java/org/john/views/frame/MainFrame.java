@@ -8,11 +8,11 @@ import java.util.List;
 import javax.swing.*;
 
 import org.john.constant.PictureConst;
-import com.enhance.swing.action.MAction;
-import com.enhance.swing.message.MessageUtil;
-import com.enhance.swing.progress.ProgressBarCallback;
-import com.enhance.swing.statusbar.EnhanceStatusBar;
-import com.enhance.swing.statusbar.EnhanceStatusItem;
+import org.enhance.swing.action.MAction;
+import org.enhance.swing.message.MessageUtil;
+import org.enhance.swing.progress.ProgressBarCallback;
+import org.enhance.swing.statusbar.EnhanceStatusBar;
+import org.enhance.swing.statusbar.EnhanceStatusItem;
 import org.john.support.MenuInitSupport;
 import org.john.support.config.SystemConfig;
 import org.john.views.ComponentPool;

@@ -1,7 +1,7 @@
 package org.john.enums;
 
-import com.enhance.common.enums.TextedEnum;
-import com.enhance.common.util.EnumUtil;
+import org.enhance.common.enums.TextedEnum;
+import org.enhance.common.util.EnumUtil;
 
 public enum MethodEnum implements TextedEnum {
 	POST("POST"),

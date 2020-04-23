@@ -4,7 +4,7 @@ import java.awt.*;
 
 import javax.swing.*;
 
-import com.enhance.swing.dialog.EnhanceBasicDialog;
+import org.enhance.swing.dialog.EnhanceBasicDialog;
 
 public class AboutDialog extends EnhanceBasicDialog {
 

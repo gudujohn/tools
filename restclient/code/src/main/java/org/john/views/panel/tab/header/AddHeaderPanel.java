@@ -5,10 +5,10 @@ import java.awt.event.ActionEvent;
 import javax.swing.*;
 
 import org.john.constant.PictureConst;
-import com.enhance.common.util.Assertion;
-import com.enhance.swing.action.MAction;
-import com.enhance.swing.field.EnhanceTextField;
-import com.enhance.swing.layout.EnhanceBoxLayout;
+import org.enhance.common.util.Assertion;
+import org.enhance.swing.action.MAction;
+import org.enhance.swing.field.EnhanceTextField;
+import org.enhance.swing.layout.EnhanceBoxLayout;
 import org.john.views.ComponentPool;
 
 public class AddHeaderPanel extends JPanel {

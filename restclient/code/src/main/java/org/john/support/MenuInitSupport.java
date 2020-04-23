@@ -1,32 +1,31 @@
 package org.john.support;
 
 import java.awt.event.ActionEvent;
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.swing.*;
 
 import org.apache.commons.lang3.StringUtils;
-
+import org.enhance.common.util.Detect;
+import org.enhance.swing.action.MAction;
+import org.john.constant.PathConst;
 import org.john.constant.PictureConst;
-import com.enhance.common.util.Detect;
-import com.enhance.common.util.FileUtil;
-import com.enhance.swing.action.MAction;
-import org.john.enums.MethodEnum;
 import org.john.model.MenuXmlModel;
 import org.john.util.MenuXmlUtil;
 import org.john.util.SpringUtil;
 import org.john.views.ComponentPool;
+import org.john.views.component.book.BookmarkMenuItem;
 
 import lombok.extern.slf4j.Slf4j;
+import org.john.views.component.book.CreateBookmarkMenuItem;
 
 @Slf4j
 public class MenuInitSupport {
 
 	private static MenuInitSupport instance;
 
-	private static List<MenuXmlModel> restXmlModleList;
+	private static List<MenuXmlModel> restXmlModleList = new ArrayList<>();
 
 	private MenuInitSupport() {
 		initMenuInitSupport();
@@ -40,13 +39,22 @@ public class MenuInitSupport {
 	}
 
 	private void initMenuInitSupport() {
-		String filePath = FileUtil.getSystemAbsolutePath() + "config/viewconfig/menu.config.xml";
-		log.info("load menu config:" + filePath);
+		String baseMenuConfigfilePath = PathConst.BASE_MENU_CONFIG_FILE_PATH;
+		String bookMenuConfigfilePath = PathConst.BOOK_MENU_CONFIG_FILE_PATH;
 		try {
-			MenuXmlUtil.getRestXmlModleList(filePath);
-			restXmlModleList = MenuXmlUtil.restXmlModleList;
+			log.info("load base menu config:" + baseMenuConfigfilePath);
+			MenuXmlUtil.getRestXmlModelList(baseMenuConfigfilePath);
+			if (Detect.notEmpty(MenuXmlUtil.restXmlModelList)) {
+				restXmlModleList.addAll(MenuXmlUtil.restXmlModelList);
+			}
+			log.info("load book menu config:" + bookMenuConfigfilePath);
+			MenuXmlUtil.getRestXmlModelList(bookMenuConfigfilePath);
+			if (Detect.notEmpty(MenuXmlUtil.restXmlModelList)) {
+				restXmlModleList.addAll(MenuXmlUtil.restXmlModelList);
+			}
+			restXmlModleList = MenuXmlUtil.mergeXmlModleList(restXmlModleList);
 		} catch (Exception e) {
-			log.info("没有" + filePath + "相关配置", e);
+			log.info("没有" + baseMenuConfigfilePath + "或" + bookMenuConfigfilePath + "相关配置", e);
 		}
 	}
 
@@ -70,6 +78,9 @@ public class MenuInitSupport {
 					menu = new JMenuItem(menuXmlModel.getName());
 				} else if (menuXmlModel.isScene()) {
 					menu = new JMenu(menuXmlModel.getName());
+					((JMenu) menu).setIcon(PictureConst.IMAGE_BOOKMARK);
+					((JMenu) menu).add(new CreateBookmarkMenuItem());
+					((JMenu) menu).addSeparator();
 					List<MenuXmlModel> sceneMenuModelList = menuXmlModel.getChild();
 					if (Detect.notEmpty(sceneMenuModelList)) {
 						for (MenuXmlModel item : sceneMenuModelList) {
@@ -78,6 +89,7 @@ public class MenuInitSupport {
 					} else {
 						continue;
 					}
+					ComponentPool.getInstance().setBookMenu((JMenu) menu);
 				} else {
 					menu = new JMenu(menuXmlModel.getName());
 				}
@@ -135,56 +147,7 @@ public class MenuInitSupport {
 	}
 
 	private static void appendSceneMenuItem(MenuXmlModel sceneModel, JMenu sceneMenu) {
-
-		JMenuItem menuItem = new JMenuItem(new MAction(sceneModel.getName()) {
-			private static final long serialVersionUID = 6511468245059478243L;
-
-			@Override
-			public void execute(ActionEvent actionEvent) {
-				String url = sceneModel.getUrl();
-				String requestMethod = sceneModel.getRequestMethod();
-				Map<String, String> headerMap = sceneModel.getHeaderMap();
-				String requestBody = sceneModel.getRequestBody();
-				if (Detect.notEmpty(url)) {
-					int count = ComponentPool.getInstance().getUrlCombo().getItemCount();
-					boolean contains = false;
-					for (int i = 0; i < count; i++) {
-						String urlHistory = ComponentPool.getInstance().getUrlCombo().getItemAt(i);
-						if (urlHistory.equals(url)) {
-							contains = true;
-							break;
-						}
-					}
-					if (!contains) {
-						ComponentPool.getInstance().getUrlCombo().addItem(url);
-					}
-					ComponentPool.getInstance().getUrlCombo().setSelectedItem(url);
-				}
-				if (Detect.notEmpty(requestMethod)) {
-					MethodEnum methodEnum = MethodEnum.get(requestMethod);
-					ComponentPool.getInstance().getMethodCombo().setSelectedItem(methodEnum.getText());
-				}
-				ComponentPool.getInstance().getBodyPanel().getJsonTextArea().setText(StringUtils.EMPTY);
-				if (Detect.notEmpty(requestBody)) {
-					ComponentPool.getInstance().getBodyPanel().getJsonTextArea().setText(requestBody);
-				}
-				ComponentPool.getInstance().getHeaderTable().removeAllData();
-				if (Detect.notEmpty(headerMap)) {
-					int size = headerMap.size();
-					String[][] datas = new String[size][2];
-					Iterator iterator = headerMap.entrySet().iterator();
-					for (int i = 0; i < size; i++) {
-						Map.Entry<String, String> entry = (Map.Entry<String, String>) iterator.next();
-						String key = entry.getKey();
-						String value = entry.getValue();
-						datas[i][0] = key;
-						datas[i][1] = value;
-					}
-					ComponentPool.getInstance().getHeaderTable().addValue(datas);
-				}
-			}
-		});
-
+		JMenuItem menuItem = new BookmarkMenuItem(sceneModel);
 		sceneMenu.add(menuItem);
 	}
 

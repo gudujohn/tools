@@ -13,9 +13,9 @@ import org.springframework.http.HttpMethod;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import com.enhance.common.support.ThreadCallBack;
-import com.enhance.common.util.Detect;
-import com.enhance.swing.dialog.ExceptionDialog;
+import org.enhance.common.support.ThreadCallBack;
+import org.enhance.common.util.Detect;
+import org.enhance.swing.dialog.ExceptionDialog;
 
 import lombok.extern.slf4j.Slf4j;
 

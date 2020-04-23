@@ -1,7 +1,7 @@
 package org.john;
 
-import com.enhance.swing.EnhanceUIManager;
-import com.enhance.swing.message.MessageUtil;
+import org.enhance.swing.EnhanceUIManager;
+import org.enhance.swing.message.MessageUtil;
 import org.john.util.SettingLoad;
 import org.john.views.frame.MainFrame;
 

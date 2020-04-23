@@ -13,8 +13,8 @@ import javax.swing.border.EmptyBorder;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.enhance.common.util.Detect;
-import com.enhance.common.util.JsonFormatUtil;
+import org.enhance.common.util.Detect;
+import org.enhance.common.util.JsonFormatUtil;
 
 public class JsonTextArea extends JTextArea implements MouseListener {
 

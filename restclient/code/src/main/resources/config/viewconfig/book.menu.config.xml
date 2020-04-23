@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <menu-config>
     <menu id="toolMenu" name="工具">
-        <!--<menuItem id="singThreadTest" name="单线程压力测试"></menuItem>
-        <menuItem id="multiThreadTest" name="多线程压力测试"></menuItem>-->
-        <separator/>
-        <menu id="scene" name="场景">
+        <menu id="scene" name="书签">
             <menuItem id="baidu" name="百度">
                 <url><![CDATA[http://www.baidu.com]]></url>
                 <method><![CDATA[POST]]></method>

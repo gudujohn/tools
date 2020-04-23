@@ -9,7 +9,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.env.ConfigurablePropertyResolver;
 
 import org.john.constant.SysConfigConst;
-import com.enhance.common.util.Detect;
+import org.enhance.common.util.Detect;
 
 import lombok.extern.slf4j.Slf4j;
 

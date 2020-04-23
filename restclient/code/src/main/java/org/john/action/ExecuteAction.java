@@ -5,9 +5,9 @@ import java.awt.event.ActionEvent;
 import javax.swing.*;
 
 import org.john.constant.PictureConst;
-import com.enhance.common.util.Assertion;
-import com.enhance.swing.action.MAction;
-import com.enhance.swing.message.MessageUtil;
+import org.enhance.common.util.Assertion;
+import org.enhance.swing.action.MAction;
+import org.enhance.swing.message.MessageUtil;
 import org.john.support.ExceptionSupport;
 import org.john.util.SpringUtil;
 import org.john.views.ComponentPool;

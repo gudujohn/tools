@@ -3,7 +3,7 @@ package org.john.views.panel.tab.header;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-import com.enhance.swing.table.EnhanceSelectTable;
+import org.enhance.swing.table.EnhanceSelectTable;
 import org.john.views.ComponentPool;
 
 public class HeaderTablePanel extends JScrollPane {

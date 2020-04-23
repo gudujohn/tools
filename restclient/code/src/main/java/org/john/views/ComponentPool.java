@@ -2,8 +2,8 @@ package org.john.views;
 
 import javax.swing.*;
 
+import org.enhance.swing.table.EnhanceSelectTable;
 import org.john.action.ExecuteAction;
-import com.enhance.swing.table.EnhanceSelectTable;
 import org.john.views.component.JsonTextAreaScrollPane;
 
 import lombok.Getter;
@@ -22,6 +22,8 @@ public class ComponentPool {
 		}
 		return instance;
 	}
+
+	private JMenu bookMenu;
 
 	private JComboBox<String> methodCombo;
 	private JComboBox<String> urlCombo;
@@ -45,6 +47,10 @@ public class ComponentPool {
 		resultPanel = new JsonTextAreaScrollPane();
 
 		requestProcessBar = new JProgressBar();
+	}
+
+	public void setBookMenu(JMenu bookMenu) {
+		this.bookMenu = bookMenu;
 	}
 
 }
